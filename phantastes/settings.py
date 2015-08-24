@@ -136,6 +136,10 @@ INSTALLED_APPS = [
 
     # project
     "phantastes",
+
+	# internal apps
+	"polls",
+	"readings",
 ]
 
 # A sample logging configuration. The only tangible logging

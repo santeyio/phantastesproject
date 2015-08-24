@@ -2,7 +2,7 @@
 
 {% load i18n %}
 
-{% block head_title %}pinax-project-account{% endblock %}
+{% block head_title %}Phantastes{% endblock %}
 
 {% block body_class %}home{% endblock %}
 
@@ -10,13 +10,10 @@
     <section class="jumbotron">
         <div class="container">
             {% include "_messages.html" %}
-            <h1>{% blocktrans %}Welcome to<br>pinax-project-account{% endblocktrans %}</h1>
+            <h1>{% blocktrans %}Welcome to<br>Phantastes{% endblocktrans %}</h1>
             <p>
                 {% blocktrans %}
-                In addition to what is provided by the "zero" project, this project
-                provides thorough integration with django-user-accounts, adding
-                comprehensive account management functionality. It is a foundation
-                suitable for most sites that have user accounts.
+                This is an experiment we're doing in communal reading, named after the developers favorite book. 
                 {% endblocktrans %}
             </p>
             {% if not user.is_authenticated %}
@@ -28,13 +25,12 @@
     </section>
     <section>
         <div class="container">
-            <h2 class="text-center">{% blocktrans %}What is Pinax?{% endblocktrans %}</h2>
+            <h2 class="text-center">{% blocktrans %}What is Phantastes?{% endblocktrans %}</h2>
             <p class="lead">
                 {% blocktrans %}
-                <b>Pinax</b> is an open-source platform based on Django and
-                intended to provide a starting point for websites. It takes
-                care of the things that many sites have in common, so you can
-                focus on what makes your site different.
+                <b>Phantastes</b> is a place where you can participate in the great discussion of
+				history by reading great books with like-minded (and hopefull un-like-minded) people.
+				Check out our schedule and join the discussion!
                 {% endblocktrans %}
             </p>
             <div class="feature-columns">
