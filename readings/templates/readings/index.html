@@ -6,12 +6,13 @@
 
 {% block body_class %}home{% endblock %}
 
-{% if readings %}
+{% block body_base %}
+<div class="container">
+	<h3>Reading Schedules</h3>
 	<ul>
 	{% for reading in readings %}
 		<li><a href="/readings/{{ reading.id }}/">{{ reading.title }}</a></li>
 	{% endfor %}
 	</ul>
-{% else %}
-	<p> No readings yet </p>
-{% endif %}
+</div>
+{% endblock %}
