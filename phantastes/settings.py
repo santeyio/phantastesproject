@@ -140,6 +140,7 @@ INSTALLED_APPS = [
 	# internal apps
 	"polls",
 	"readings",
+	"profiles",
 ]
 
 # A sample logging configuration. The only tangible logging
