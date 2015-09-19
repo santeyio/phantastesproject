@@ -6,6 +6,7 @@ import datetime
 
 def index(request):
 	books = Book.objects.filter(active=True)
+        current_book = ''
 	for book in books:
 		timedelta = datetime.date.today() - book.start_date
 		if timedelta.days < book.number_of_days:
