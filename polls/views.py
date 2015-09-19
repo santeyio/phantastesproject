@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from models import Poll, Book, Vote
 from forms import BookForm
 from django.contrib.auth.models import User
-import datetime, pytz
+import datetime, pytz, operator
 
 
 @login_required(login_url='/account/login')
@@ -42,15 +42,23 @@ def voting(request, poll_id):
     books = Book.objects.filter(poll=poll_id)
     already_voted = Vote.objects.filter(user=request.user).filter(poll=poll)
     
+    for book in books:
+        number_of_votes = Vote.objects.filter(book=book)
+        book.votes = len(number_of_votes)
+
+    books = sorted(books, key=operator.attrgetter('votes'), reverse=True)
+
     if len(already_voted) >= 3:
         disabled = 'disabled="disabled"'
     else:
         disabled = ''
 
+
     context = RequestContext(request, {
         'poll': poll,
         'books': books,
         'disabled': disabled,
+        'already_voted': len(already_voted),
     })
 
     if request.method == "POST":
@@ -74,6 +82,7 @@ def nominations(request, poll_id):
     poll = Poll.objects.get(id=poll_id)
     books = Book.objects.filter(poll=poll_id)
     disabled = ''
+    votes = {}
 
     for book in books:
         if book.user == request.user:
@@ -84,7 +93,7 @@ def nominations(request, poll_id):
         if form.is_valid():
             title = form.cleaned_data['title']
             author = form.cleaned_data['author']
-            description = form.cleaned_data['author']
+            description = form.cleaned_data['description']
             book = Book(title=title, author=author, description=description, poll=poll, user=request.user)
             book.save()
             return redirect('/polls/nominations/' + str(poll_id))

@@ -9,52 +9,94 @@
 {% block body_base %}
 <div class="container">
 
-<h3>{{ poll.title }}</h3>
-<hr/>
-{% if disabled != '' %}
-<div class="row">
-	<div class="col-md-3"></div>
-	<div class="bg-warning col-md-6">
-	<b>You've put in 3 votes on this poll. You don't have any more votes left!</b>
-	<br/>
-	</div>
-</div>
-<br/>&nbsp;
-{% endif %}
-You have three votes availble to you, you can spend those votes however you like. All three on one book, 2 on one book and 1 on another, or 1 on three different books.
-<br/>&nbsp;<br/>
+	<h3>{{ poll.title }}</h3>
+	<hr/>
 
-
-<div class="col-md-5 center">
-	<div class="panel panel-default"> 
-		<div class="panel-heading">
-			<h3 class="panel-title">Nominated Books</h3>
+	<div class="row">
+		<div class="col-md-3">
 		</div>
-		<div class="panel-body">
-		<form method="post" id="voting_form" action="">
-		{% csrf_token %}
-		{% for book in books %}
-			<div class="form-group">
-				<label for="book{{ book.id }}" class="control-label">
-					<b>Book: </b>{{ book.title }}<br/>
-					<b>Author: </b>{{ book.author }}
-				</label>
-				<div class="col-sm-4">
-					<input type="number" max="3" min="0" class="form-control book_input" name="{{ book.id }}" {{ disabled }} value="0"/>
-				</div>
 
+		<div class="col-md-6">
+			<div style="display:none;" id="warning" class="alert alert-danger alert-dismissible warning-modal" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<p>Whoa there. We'll just assume you didn't read the instructions. ;)</p>
 			</div>
 
-		{% endfor %}
-		<input class="btn btn-default" type="submit" value="Submit" {{ disabled }}>
-		</form>
+			<div style="display:none;" id="warning2" class="alert alert-danger alert-dismissible warning-modal" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<p>Really? A second time?</p>
+			</div>
+
+			<div style="display:none;" id="warning3" class="alert alert-danger alert-dismissible warning-modal" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<p>Seriously? <span id="warning3-number"></span> times now?</p>
+			</div>
+
+			{% if disabled != '' %}
+				<div class="alert alert-warning alert-dismissible">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<p>You've put in 3 votes on this poll. You don't have any more votes left!</p>
+				</div>
+			{% endif %}
 		</div>
 	</div>
-</div>
+	<br/>&nbsp;
+	You have three votes availble to you, you can spend those votes however you like. All three on one book, 2 on one book and 1 on another, or 1 on three different books.
+	<br/>&nbsp;<br/>
 
-<div class="bg-danger col-md-2">
-	<span id="warning">{{ error }}</span>
-</div>
+
+	<div class="col-md-5 center">
+		<div class="panel panel-default"> 
+			<div class="panel-heading">
+				<h3 class="panel-title">Nominated Books</h3>
+			</div>
+			<div class="panel-body">
+			<form method="post" id="voting_form" action="">
+			{% csrf_token %}
+			{% for book in books %}
+				<div class="form-group">
+					<label for="book{{ book.id }}" class="control-label">
+						Book: <span style="font-weight:normal">{{ book.title }}</span>
+						<!--Author: <span style="font-weight:normal">{{ book.author }}</span><br/>
+						Nominator: <span style="font-weight:normal">{{ book.user }}</span>-->
+					</label>
+					<div class="col-sm-4">
+						<input type="number" max="3" min="0" class="form-control book_input" name="{{ book.id }}" {{ disabled }} value="0"/>
+					</div>
+
+				</div>
+				<br/>
+
+			{% endfor %}
+			<input class="btn btn-default" type="submit" value="Submit" {{ disabled }}>
+			</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-6">
+		{% for book in books %}
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">{{ book.votes }} | {{ book.title }}</h3>
+			</div>
+			<div class="panel-body">
+						<b>Nominated by: </b>{{ book.user.username }}<br/>
+						<b>Author: </b>{{ book.author }}<br/>
+						<b>Description: </b>{{ book.description }}<br/>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+
 
 </div>
 {% endblock %}
@@ -62,19 +104,29 @@ You have three votes availble to you, you can spend those votes however you like
 {% block extra_body %}
 <script>
 
+var count = 1;
+
 $(".book_input").change(function(){
-	var sum = 0;
-	$("form#voting_form :input").each(function(){
+	var sum = {{ already_voted }};
+	$("form#voting_form :input[type='number']").each(function(){
 		sum = sum + Number($(this).val());
 		if (sum > 3) {
-			$("form#voting_form :input[type='number']").val("");
-			$("#warning").html("Hey! Only three!");
+			$("form#voting_form :input[type='number']").val("0");
+			$(".warning-modal").hide();
+			if (count == 1){
+				$("#warning").fadeIn();
+			} else if (count == 2) {
+				$("#warning2").fadeIn();
+			} else if (count > 2) {
+				$("#warning3-number").html(count);
+				$("#warning3").fadeIn();
+			}
+			count += 1;
 			return false;
 		}
 	});
-	var sum = 0;
+	var sum = {{ already_voted }};
 });
 
 </script>
 {% endblock %}
-

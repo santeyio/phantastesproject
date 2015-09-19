@@ -1,3 +1,4 @@
 *.pyc
 node_modules/
 phantastes/site_media/
+*.db
