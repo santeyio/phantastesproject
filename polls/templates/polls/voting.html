@@ -86,7 +86,7 @@
 		{% for book in books %}
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">{{ book.votes }} | {{ book.title }}</h3>
+				<h3 class="panel-title">{{ book.title }} | Current Votes: {{ book.votes }} </h3>
 			</div>
 			<div class="panel-body">
 						<b>Nominated by: </b>{{ book.user.username }}<br/>
