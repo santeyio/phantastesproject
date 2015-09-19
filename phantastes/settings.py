@@ -143,10 +143,11 @@ INSTALLED_APPS = [
     # project
     "phantastes",
 
-	# internal apps
-	"polls",
-	"readings",
-	"profiles",
+    # internal apps
+    "polls",
+    "readings",
+    "profiles",
+    "widget_tweaks",
 ]
 
 # A sample logging configuration. The only tangible logging

@@ -8,6 +8,12 @@
             <a href="/profile/{% user_display request.user %}"><i class="fa fa-user"></i> {% user_display request.user %}</a>
         </p>
         <li>
+            <a href="{% url 'polls:index' %}"><i class="fa fa-hourglass"></i> {% trans "Polls" %}</a>
+        </li>
+        <li>
+            <a href="{% url 'readings:index' %}"><i class="fa fa-book"></i> {% trans "Readings" %}</a>
+        </li>
+        <li>
             <a href="{% url 'account_settings' %}"><i class="fa fa-cog"></i> {% trans "Settings" %}</a>
         </li>
         <li>

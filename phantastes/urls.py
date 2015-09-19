@@ -2,13 +2,14 @@ from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
+from phantastes import views
 
 from django.contrib import admin
 
 
 urlpatterns = patterns(
     "",
-    url(r"^$", TemplateView.as_view(template_name="homepage.html"), name="home"),
+    url(r"^$", views.index, name="home"),
     url(r"^admin/", include(admin.site.urls)),
     url(r"^account/", include("account.urls")),
     url(r"^profile/", include("profiles.urls", namespace="profiles")),

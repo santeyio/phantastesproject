@@ -8,6 +8,20 @@
 
 {% block body_base %}
 <div class="container">
-<h3>Here are the current
+<h3>Here are the current polls!</h3>
+<hr/>
+
+
+{% if voting_poll %}
+You can vote on this poll! 
+<a href="{% url 'polls:voting' voting_poll.id %}">{{ voting_poll.title }}</a>
+{% endif %}
+<br/>
+
+{% if nomination_poll %}
+You can nominate books on this poll! 
+<a href="{% url 'polls:nominations' nomination_poll.id %}">{{ nomination_poll.title }}</a>
+{% endif %}
+
 </div>
 {% endblock %}

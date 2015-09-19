@@ -1,13 +1,13 @@
 from django.contrib import admin
 
-from .models import Schedule, Day
+from .models import Book, Day
 
 class DayInline(admin.TabularInline):
 	model = Day
 	extra = 1
 
-class ScheduleAdmin(admin.ModelAdmin):
+class BookAdmin(admin.ModelAdmin):
 	inlines = [DayInline]
 
 
-admin.site.register(Schedule, ScheduleAdmin)
+admin.site.register(Book, BookAdmin)

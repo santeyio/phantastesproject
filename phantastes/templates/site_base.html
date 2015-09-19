@@ -2,6 +2,7 @@
 
 {% load staticfiles %}
 {% load metron_tags %}
+{% load widget_tweaks %}
 {% load i18n %}
 
 
@@ -11,6 +12,7 @@
 
 
 {% block extra_head_base %}
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     {% block extra_head %}{% endblock %}
 {% endblock %}
 
