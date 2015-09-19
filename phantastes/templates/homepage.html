@@ -9,18 +9,33 @@
 {% block body_base %}
     <section class="jumbotron">
         <div class="container">
-            {% include "_messages.html" %}
-            <h1>{% blocktrans %}Welcome to<br>Phantastes{% endblocktrans %}</h1>
-            <p>
-                {% blocktrans %}
-                This is an experiment we're doing in communal reading, named after the developers favorite book. 
-                {% endblocktrans %}
-            </p>
-            {% if not user.is_authenticated %}
-            {% url "account_login" as login_url %}
-            {% url "account_signup" as signup_url %}
-            <p>{% blocktrans %}You can <a href="{{ login_url }}" class="btn btn-default">Log In</a> or <a href="{{ signup_url }}" class="btn btn-primary">Sign Up</a> to try out the site.{% endblocktrans %}</p>
-            {% endif %}
+			<div class="col-md-8">
+				{% include "_messages.html" %}
+				<h1>{% blocktrans %}Welcome to<br>Phantastes{% endblocktrans %}</h1>
+				<p>
+					{% blocktrans %}
+					This is an experiment we're doing in communal reading, named after one of the best books ever.
+					{% endblocktrans %}
+				</p>
+				{% if not user.is_authenticated %}
+				{% url "account_login" as login_url %}
+				{% url "account_signup" as signup_url %}
+				<p>{% blocktrans %}You can <a href="{{ login_url }}" class="btn btn-default">Log In</a> or <a href="{{ signup_url }}" class="btn btn-primary">Sign Up</a> to try out the site.{% endblocktrans %}</p>
+				{% endif %}
+			</div>
+			<div class="col-md-4">
+				<div class="panel panel-default"> <div class="panel-heading">
+						<h3 class="panel-title">Today's Reading</h3>
+					</div>
+					<div class="panel-body">
+						<b>Book: </b>{{ book.title }}
+						<br/>
+						<b>Author: </b>{{ book.author }}
+						<br/>
+						<b>Reading: </b>{{ day.reading }}
+					</div>
+				</div>
+			</div>
         </div>
     </section>
     <section>
@@ -34,6 +49,11 @@
                 {% endblocktrans %}
             </p>
             <div class="feature-columns">
+				<div class="col-md-2"></div>
+				<div class="col-md-8">
+				</div>
+				<div class="col-md-2"></div>
+			<!--
                 <div>
                     <i class="fa fa-cubes fa-3x"></i><br>
                     {% blocktrans %}
@@ -58,15 +78,12 @@
                     {% endblocktrans %}
                 </div>
             </div>
+			-->
         </div>
     </section>
     <section>
         <div class="container">
             <p class="lead text-center">
-                {% blocktrans %}
-                See <a href="http://pinaxproject.com/">pinaxproject.com</a>
-                for more information.
-                {% endblocktrans %}
             </p>
         </div>
     </section>

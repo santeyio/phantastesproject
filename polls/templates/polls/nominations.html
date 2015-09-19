@@ -1,0 +1,79 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load widget_tweaks %}
+
+{% block head_title %}Phantastes{% endblock %}
+
+{% block body_class %}home{% endblock %}
+
+{% block body_base %}
+<div class="container">
+
+<h3>{{ poll.title }}</h3>
+<hr/>
+<div class="row">
+	<div class="col-md-4">
+		Here you can nominate a book for the upcoming poll. 
+		<br/>&nbsp;<br/>
+	</div>
+	<div class="col-md-1">
+	</div>
+	<div class="col-md-6">
+		Here are the books other people have nominated so far. 
+	</div>
+</div>
+
+<div class="container">
+
+	<div class="col-md-4">
+		<form action="" method="post">
+			{% csrf_token %}
+			{% for field in form %}
+				<div class="form-group">
+					<label class="control-label">
+						{{ field.label }}
+					</label>
+					{% render_field field class="form-control" %}
+				</div>
+			{% endfor %}
+			<input type="submit" value="Submit" />
+		</form>
+	</div>
+	<div class="col-md-1"></div>
+
+	<div class="col-md-6">
+		{% for book in books %}
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">{{ book.title }}</h3>
+			</div>
+			<div class="panel-body">
+						<b>Nominated by: </b>{{ book.user.username }}<br/>
+						<b>Author: </b>{{ book.author }}<br/>
+						<b>Description: </b>{{ book.description }}<br/>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+
+</div>
+
+
+</div>
+{% endblock %}
+
+{% block extra_body %}
+<script>
+
+{% if disabled != '' %}
+
+$(document).ready(function(){
+	$("form :input").each(function(){
+		$(this).prop('disabled', true);
+	});
+});
+{% endif %}
+
+</script>
+{% endblock %}
