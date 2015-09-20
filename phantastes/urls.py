@@ -13,8 +13,8 @@ urlpatterns = patterns(
     url(r"^admin/", include(admin.site.urls)),
     url(r"^account/", include("account.urls")),
     url(r"^profile/", include("profiles.urls", namespace="profiles")),
-	url(r"^polls/", include("polls.urls", namespace="polls")),
-	url(r"^readings/", include("readings.urls", namespace="readings")),
+    url(r"^polls/", include("polls.urls", namespace="polls")),
+    url(r"^readings/", include("readings.urls", namespace="readings")),
 )
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

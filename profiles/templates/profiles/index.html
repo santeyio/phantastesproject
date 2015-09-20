@@ -4,16 +4,19 @@
 
 {% block head_title %}Phantastes{% endblock %}
 
+{% block extra_head %}
+<script src="/site_media/static/js/typeahead.bundle.js"></script>
+{% endblock %}
+
 {% block body_class %}home{% endblock %}
 
 {% block body_base %}
 <div class="container">
 	<h3>{{ user.username }}'s profile</h3>
 	<hr/>
-	<div class="container-fluid">
-		<div class="col-md-6">
-		</div>
-		<div class="panel panel-default pull-right"> <div class="panel-heading">
+	<div class="container">
+
+		<div class="panel panel-default pull-left"> <div class="panel-heading">
 				<h3 class="panel-title">Today's Reading</h3>
 			</div>
 			<div class="panel-body">
@@ -24,6 +27,68 @@
 				<b>Reading: </b>{{ day.reading }}
 			</div>
 		</div>
+
+		<!-- divider -->
+		<div class="col-md-1">
+		</div>
+
+		<div class="col-md-8">
+			<ul class="nav nav-tabs">
+				<li role="presentation" class="active"><a aria-controls="thoughts" role="tab" data-toggle="tab" href="#thoughts">Thoughts</a></li>
+				<li role="presentation" class=""><a aria-controls="quotes" role="tab" data-toggle="tab" href="#quotes">Quotes</a></li>
+				<li role="presentation" class=""><a aria-controls="stuff" role="tab" data-toggle="tab" href="#stuff">Stuff</a></li>
+			</ul>
+
+			<div class="tab-content">
+				<div id="thoughts" role="tabpanel" class="tab-pane active">
+					<div id="book_select" class="col-md-5">
+						<input class="typeahead form-control" data-id="" type="text" placeholder="Books">
+					</div>
+				</div>
+				<div id="quotes" role="tabpanel" class="tab-pane">
+				</div>
+				<div id="stuff" role="tabpanel" class="tab-pane">
+					stuff
+				</div>
+			</div>
+
+		</div>
+
 	</div>
 </div>
+
+<script>
+
+{% autoescape off %}
+dataset = {{ book_dataset }};
+{% endautoescape %}
+
+var book_list = [];
+
+for(book in dataset){
+	//console.log(dataset[book].name);
+	book_list.push(dataset[book].name);
+}
+
+console.dir(book_list);
+
+// constructs the suggestion engine
+var bloodhound_object = new Bloodhound({
+  local: book_list,
+  datumTokenizer: Bloodhound.tokenizers.whitespace,
+  queryTokenizer: Bloodhound.tokenizers.whitespace,
+});
+
+$('#book_select .typeahead').typeahead({
+  hint: true,
+  highlight: true,
+  minLength: 1
+},
+{
+  name: 'books',
+  source: bloodhound_object,
+});
+
+
+</script>
 {% endblock %}

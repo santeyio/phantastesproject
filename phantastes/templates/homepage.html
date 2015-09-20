@@ -4,10 +4,19 @@
 
 {% block head_title %}Phantastes{% endblock %}
 
+{% block extra_head %}
+<style>
+	 body {
+		background-image: url("/site_media/static/img/castle.png");
+		background-repeat: no-repeat;
+	 }
+</style>
+{% endblock %}
+
 {% block body_class %}home{% endblock %}
 
 {% block body_base %}
-    <section class="jumbotron">
+    <section class="jumbotron" style="background-color:rgba(255, 255, 255, 0)">
         <div class="container">
 			<div class="col-md-8">
 				{% include "_messages.html" %}
@@ -38,7 +47,7 @@
 			</div>
         </div>
     </section>
-    <section>
+    <section style="background-color:rgba(242, 242, 242, 0.48)">
         <div class="container">
             <h2 class="text-center">{% blocktrans %}What is Phantastes?{% endblocktrans %}</h2>
             <p class="lead">
