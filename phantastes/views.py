@@ -21,3 +21,8 @@ def index(request):
             continue
     
     return render(request, 'homepage.html', context)
+
+def about(request):
+    context = RequestContext(request,{
+    })
+    return render(request, 'about.html', context)

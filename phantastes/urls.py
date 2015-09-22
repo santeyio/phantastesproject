@@ -15,6 +15,7 @@ urlpatterns = patterns(
     url(r"^profile/", include("profiles.urls", namespace="profiles")),
     url(r"^polls/", include("polls.urls", namespace="polls")),
     url(r"^readings/", include("readings.urls", namespace="readings")),
+    url(r"^about/$", views.about, name="about"),
 )
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
