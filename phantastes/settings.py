@@ -117,6 +117,7 @@ MIDDLEWARE_CLASSES = [
     "spirit.user.middleware.LastSeenMiddleware",
     "spirit.user.middleware.ActiveUserMiddleware",
     "spirit.core.middleware.PrivateForumMiddleware",
+    "phantastes.middleware.ForumMiddleware",
 ]
 
 ROOT_URLCONF = "phantastes.urls"
