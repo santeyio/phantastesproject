@@ -10,6 +10,7 @@ from django.contrib import admin
 urlpatterns = patterns(
     "",
     url(r"^$", views.index, name="home"),
+    url(r"^forum/", include('spirit.urls')),
     url(r"^admin/", include(admin.site.urls)),
     url(r"^account/", include("account.urls")),
     url(r"^profile/", include("profiles.urls", namespace="profiles")),
