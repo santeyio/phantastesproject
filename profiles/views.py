@@ -32,6 +32,7 @@ def index(request, username):
             'book': current_book,
             'day': days[timedelta.days],
             'book_dataset': json.dumps(book_dataset),
+            'logged_in': True,
         })
 
         return render(request, 'profiles/index.html', context)
@@ -39,4 +40,17 @@ def index(request, username):
     # public view for users
     else:
         user = User.objects.get(username=username)
-        return HttpResponse("yay! it worked! " + user.username)
+        context = RequestContext(request, {
+            'logged_in': False,
+        })
+        return render(request, 'profiles/index.html', context)
+
+def all(request):
+    users = User.objects.all()
+    users = sorted(users, key=operator.attrgetter('username'), reverse=False)
+    
+    context = RequestContext(request, {
+        'users': users,
+    })
+
+    return render(request, 'profiles/all.html', context)

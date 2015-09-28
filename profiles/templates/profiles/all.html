@@ -1,0 +1,23 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}Phantastes{% endblock %}
+
+{% block extra_head %}
+<script src="/site_media/static/js/typeahead.bundle.js"></script>
+{% endblock %}
+
+{% block body_class %}home{% endblock %}
+
+{% block body_base %}
+<div class="container">
+	<h3>All users</h3>
+	<hr/>
+	<div class="container">
+		{% for user in users %}
+			<a href="/profile/{{ user.username }}/">{{ user.username }}</a><br/>
+		{% endfor %}
+	</div>
+</div>
+{% endblock %}

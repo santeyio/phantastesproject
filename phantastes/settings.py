@@ -10,14 +10,14 @@ TEMPLATE_DEBUG = DEBUG
 
 DATABASES = {
     "default": {
-        #"ENGINE": "django.db.backends.sqlite3",
-        #"NAME": "dev.db",
-	"ENGINE": "django.db.backends.postgresql_psycopg2",
-	"NAME": "thepalace",
-	"USER": "cosmo",
-	"PASSWORD": "th3M1rR0r",
-	"HOST": "localhost",
-	"PORT": "",
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": "dev.db",
+	#"ENGINE": "django.db.backends.postgresql_psycopg2",
+	#"NAME": "thepalace",
+	#"USER": "cosmo",
+	#"PASSWORD": "th3M1rR0r",
+	#"HOST": "localhost",
+	#"PORT": "",
     }
 }
 

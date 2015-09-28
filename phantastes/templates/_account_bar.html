@@ -8,7 +8,19 @@
             <a href="/profile/{% user_display request.user %}"><i class="fa fa-user"></i> {% user_display request.user %}</a>
         </p>
         <li>
-            <a href="{% url 'spirit:index' %}"><i class="fa fa-comments-o"></i> {% trans "Forum" %}</a>
+			<a id="dLabel" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<i class="fa fa-comments-o"></i> {% trans "Forum" %}<span class="caret"></span>
+			</a>
+			<ul class="dropdown-menu" aria-labelledby="dLabel">
+				<li><a class="menu-link" href="{% url "spirit:user:detail" pk=user.pk slug=user.st.slug %}">{% trans "Profile" %}</a></li>
+				<li><a class="menu-link" href="{% url "spirit:topic:index-active" %}">{% trans "Topics" %}</a></li>
+				<li><a class="menu-link" href="{% url "spirit:topic:unread:index" %}">{% trans "Unread topics" %}</a></li>
+				<li><a class="menu-link" href="{% url "spirit:topic:private:index" %}">{% trans "Private topics" %}</a></li>
+
+				{% if user.st.is_administrator %}
+					<li><a class="menu-link" href="{% url "spirit:admin:index" %}">{% trans "Admin" %}</a></li>
+				{% endif %}
+			</ul>
         </li>
         <li>
             <a href="{% url 'polls:index' %}"><i class="fa fa-hourglass"></i> {% trans "Polls" %}</a>

@@ -16,6 +16,7 @@
 	<hr/>
 	<div class="container">
 
+		{% if logged_in %}
 		<div class="panel panel-default pull-left"> <div class="panel-heading">
 				<h3 class="panel-title">Today's Reading</h3>
 			</div>
@@ -33,6 +34,7 @@
 		<!-- divider -->
 		<div class="col-md-1">
 		</div>
+		{% endif %}
 
 		<div class="col-md-8">
 			<ul class="nav nav-tabs">
