@@ -4,9 +4,16 @@
 
 <ul class="nav navbar-nav pull-right">
     {% if request.user.is_authenticated %}
-        <p class="navbar-text">
-            <a href="/profile/{% user_display request.user %}"><i class="fa fa-user"></i> {% user_display request.user %}</a>
-        </p>
+		<li>
+			<a id="dLabel2" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<i class="fa fa-user"></i> {% user_display request.user %}<span class="caret"></span>
+			</a>
+			<ul class="dropdown-menu" aria-labelledby="dLabel2">
+				<li><a class="menu-link" href="{% url "profiles:index" request.user.username %}">{% trans "My Profile" %}</a></li>
+				<li><a class="menu-link" href="{% url "profiles:all" %}">{% trans "All Users" %}</a></li>
+			</ul>
+        </li>
+
         <li>
 			<a id="dLabel" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			<i class="fa fa-comments-o"></i> {% trans "Forum" %}<span class="caret"></span>
