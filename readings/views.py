@@ -6,7 +6,6 @@ from django.contrib.auth.decorators import login_required
 import operator
 
 
-@login_required(login_url='/account/login')
 def index(request):
 	readings = Book.objects.all()
 	context = RequestContext(request, {
@@ -14,7 +13,6 @@ def index(request):
 	})
 	return render(request, 'readings/index.html', context)
 
-@login_required(login_url='/account/login')
 def detail(request, reading_id):
     reading = get_object_or_404(Book, pk=reading_id)
     days = Day.objects.filter(book=reading_id)
