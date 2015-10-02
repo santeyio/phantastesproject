@@ -1,7 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.template import RequestContext, loader
 from models import Profile
+from forms import ProfileForm
 from readings.models import Book, Day
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -9,7 +10,24 @@ import datetime, operator, json
 
 @login_required(login_url='/account/login')
 def index(request, username):
+
+    # check if profile exists 
+    profile = Profile.objects.filter(user=request.user)
+    if not profile:
+        profile = False
+    else:
+        profile = profile[0]
     
+
+    # upload profile pic
+    if request.method == "POST":
+        if profile:
+            profile(avatar=request.FILES['avatar'])
+            profile.save()
+        else:
+            profile = Profile(user=request.user, avatar=request.FILES['avatar'])
+            profile.save()
+
     # logged in view
     if request.user.username == username:
 
@@ -17,9 +35,10 @@ def index(request, username):
         all_books = Book.objects.all()
         book_dataset = []
 
+
         for book in all_books:
             # create list for smart search on books for quotes section
-            book_dataset.append({'name': book.title + " (" + book.author + ")", 'id':  book.id})
+            book_dataset.append({'name': book.title + " - " + book.author, 'id':  book.id})
 
         for book in books:
             timedelta =  datetime.date.today() - book.start_date 
@@ -33,6 +52,7 @@ def index(request, username):
             'day': days[timedelta.days],
             'book_dataset': json.dumps(book_dataset),
             'logged_in': True,
+            'profile': profile,
         })
 
         return render(request, 'profiles/index.html', context)
@@ -54,3 +74,19 @@ def all(request):
     })
 
     return render(request, 'profiles/all.html', context)
+
+# ------------------
+#   Ajax functions
+# -----------------
+
+def add_thought(request):
+    if request.method == "POST":
+        pass
+    else:
+        return HttpResponse("Error")
+
+def add_underline(request):
+    if request.method == "POST":
+        pass
+    else:
+        return HttpResponse("Error")

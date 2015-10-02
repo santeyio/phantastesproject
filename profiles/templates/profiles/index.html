@@ -6,58 +6,102 @@
 
 {% block extra_head %}
 <script src="/site_media/static/js/typeahead.bundle.js"></script>
+<script src="/site_media/static/js/bootstrap-filestyle.min.js"></script>
 {% endblock %}
 
 {% block body_class %}home{% endblock %}
 
 {% block body_base %}
 <div class="container">
-	<h3>{{ user.username }}'s profile</h3>  
-	<hr/>
-	<div class="container">
 
-		{% if logged_in %}
-		<div class="panel panel-default pull-left"> <div class="panel-heading">
-				<h3 class="panel-title">Today's Reading</h3>
-			</div>
-			<div class="panel-body">
-				<b>Book: </b>{{ book.title }}
-				<br/>
-				<b>Author: </b>{{ book.author }}
-				<br/>
-				<b>Reading: </b>{{ day.reading }}
-				<br/>
-				<b>Description: </b>{{ day.description }}
-			</div>
-		</div>
+	<div class="row">
+		<div class="col-md-3 profile-padding-top">
+			<div class="panel panel-default"> 
+				<div class="panel-heading">
+					{{ request.user.username }}'s profile
+				</div>
+				<div class="panel-body">
 
-		<!-- divider -->
-		<div class="col-md-1">
-		</div>
-		{% endif %}
+					<div class="text-center">
+						{% if profile.avatar %}
+						<img src="{{ MEDIA_URL }}{{ profile.avatar }}" height="150px" width="150px" />
+						{% else %}
+						<div id="profile_picture_upload">	
+							<br/><br/>
+							<form enctype="multipart/form-data" id="file_upload" action="" method="post">
+								{% csrf_token %}
+								<input type="file" name="avatar" class="filestyle" data-classButton="btn btn-primary" data-input="false" data-classIcon="icon-plus" data-buttonText="Select File" />
+								<button class="btn btn-default" type="submit">Upload</button>
+							</form>
+						</div>
+						{% endif %}
+					</div>
 
-		<div class="col-md-8">
-			<ul class="nav nav-tabs">
-				<li role="presentation" class="active"><a aria-controls="thoughts" role="tab" data-toggle="tab" href="#thoughts">Thoughts</a></li>
-				<li role="presentation" class=""><a aria-controls="quotes" role="tab" data-toggle="tab" href="#quotes">Quotes</a></li>
-				<li role="presentation" class=""><a aria-controls="stuff" role="tab" data-toggle="tab" href="#stuff">Stuff</a></li>
-			</ul>
-
-			<div class="tab-content">
-				<div id="thoughts" role="tabpanel" class="tab-pane active">
-					<div id="book_select" class="col-md-5">
-						<input class="typeahead form-control" data-id="" type="text" placeholder="Books">
+					<div class="well profile-margin-top">
+						<h4>Today's Reading</h4>
+						<b>Book: </b>{{ book.title }}
+						<br/>
+						<b>Author: </b>{{ book.author }}
+						<br/>
+						<b>Reading: </b>{{ day.reading }}
+						<br/>
+						<b>Description: </b>{{ day.description }}
 					</div>
 				</div>
-				<div id="quotes" role="tabpanel" class="tab-pane">
-				</div>
-				<div id="stuff" role="tabpanel" class="tab-pane">
-					stuff
-				</div>
 			</div>
-
 		</div>
 
+		<div class="col-md-8 profile-padding-top">
+
+				<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#thoughts" aria-expanded="false" aria-controls="thoughts">Thoughts</button>
+				&nbsp;&nbsp;
+				<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#underlines" aria-expanded="false" aria-controls="underlines">Underlines</button>
+				&nbsp;&nbsp;
+				<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#stuff" aria-expanded="false" aria-controls="stuff">Stuff</button>
+				<br/>&nbsp;<br/>
+					<!--
+					<ul class="nav nav-tabs">
+						<li role="presentation" class="active"><a aria-controls="thoughts" role="tab" data-toggle="tab" href="#thoughts">Thoughts</a></li>
+						<li role="presentation" class=""><a aria-controls="underlines" role="tab" data-toggle="tab" href="#underlines">Underlines</a></li>
+						<li role="presentation" class=""><a aria-controls="stuff" role="tab" data-toggle="tab" href="#stuff">Stuff</a></li>
+					</ul>
+					-->
+
+					<div class="tab-content">
+					<div class="collapse" id="thoughts">
+						<div id="book_select" class="col-md-12">
+							<br/>
+							<form action="" method="post" id="thoughts_form">
+								<input type="hidden" name="category" value="thought" />
+								<input class="form-control typeahead" data-id="" type="text" placeholder="Books">
+								<br/>&nbsp;<br/>
+								<textarea class="form-control" name="thought_text">Thoughts</textarea>
+								<button type="submit" class="btn btn-default">Post</button>
+							</form>
+						</div>
+					</div>
+					<div class="collapse" id="underlines">
+						<div id="book_select" class="col-md-12">
+							<br/>
+							<form action="" method="post" id="thoughts_form">
+								<input type="hidden" name="category" value="underline" />
+								<input class="form-control typeahead" data-id="" type="text" placeholder="Books">
+								<br/>&nbsp;<br/>
+								<textarea class="form-control" name="underline_text">Underline</textarea>
+								<button type="submit" class="btn btn-default">Post</button>
+							</form>
+						</div>
+					</div>
+					<div class="collapse" id="stuff">
+							stuff
+					</div>
+
+				<div class="col-md-8 profile-padding-top">
+				<hr/>
+				Feed
+				</div>
+
+		</div>
 	</div>
 </div>
 
@@ -92,6 +136,8 @@ $('#book_select .typeahead').typeahead({
   name: 'books',
   source: bloodhound_object,
 });
+
+
 
 
 </script>
