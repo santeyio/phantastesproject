@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.template import RequestContext, loader
-from models import Profile
+from models import Profile, Post
 from forms import ProfileForm
 from readings.models import Book, Day
 from django.contrib.auth.decorators import login_required
@@ -33,12 +33,12 @@ def index(request, username):
 
         books = Book.objects.filter(active=True)
         all_books = Book.objects.all()
-        book_dataset = []
+        book_dataset = {}
 
 
         for book in all_books:
             # create list for smart search on books for quotes section
-            book_dataset.append({'name': book.title + " - " + book.author, 'id':  book.id})
+            book_dataset[book.title + " - " + book.author] = book.id
 
         for book in books:
             timedelta =  datetime.date.today() - book.start_date 
@@ -81,12 +81,29 @@ def all(request):
 
 def add_thought(request):
     if request.method == "POST":
-        pass
+        content = request.POST['thought_text']
+        book = request.POST['book_id']
+        new_thought = Post(
+            user = request.user,
+            category = "thought",
+            book = Book.objects.get(id=book),
+            body = content
+        )
+        new_thought.save()
+        return HttpResponse(True)
     else:
         return HttpResponse("Error")
 
 def add_underline(request):
     if request.method == "POST":
         pass
+    else:
+        return HttpResponse("Error")
+
+def get_user_feed(request):
+    if request.method == "POST":
+        username = request.POST['user']
+        user = User.objects.get(username=username)
+        posts = Post.objects.find(user=user)
     else:
         return HttpResponse("Error")

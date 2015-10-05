@@ -3,9 +3,9 @@ from django.contrib.auth.models import User
 from readings.models import Book
 
 class Profile(models.Model):
-	user = models.OneToOneField(User)
-	avatar = models.ImageField(blank=True, null=True)
-	status = models.CharField(blank=True, null=True, max_length=500)
+    user = models.OneToOneField(User)
+    avatar = models.ImageField(blank=True, null=True)
+    status = models.CharField(blank=True, null=True, max_length=500)
 
 class Post(models.Model):
     user        = models.ForeignKey(User)

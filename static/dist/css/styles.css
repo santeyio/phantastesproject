@@ -80,3 +80,15 @@
 #thoughts_form button {
 	margin-top: 10px;
 }
+
+#underlines_form input[type="text"] {
+	width: 400px;
+}
+
+#underlines_form textarea {
+	width: 500px;
+}
+
+#underlines_form button {
+	margin-top: 10px;
+}
