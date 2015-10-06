@@ -1,5 +1,9 @@
 
-/* profiles */
+/***********
+ *
+ *   Profiles 
+ *
+ ************/
 
 .profile-padding-top {
 	padding-top: 20px;
@@ -91,4 +95,20 @@
 
 #underlines_form button {
 	margin-top: 10px;
+}
+
+.feed p {
+	font-size: 10pt;
+}
+
+.feed blockquote {
+	font-size: 10pt;
+}
+
+.float-top {
+	margin-top:-45px;
+}
+
+.thought-background{
+	background-color: white;
 }

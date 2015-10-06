@@ -53,6 +53,7 @@ def index(request, username):
             'book_dataset': json.dumps(book_dataset),
             'logged_in': True,
             'profile': profile,
+            'username': request.user.username,
         })
 
         return render(request, 'profiles/index.html', context)
@@ -68,9 +69,23 @@ def index(request, username):
 def all(request):
     users = User.objects.all()
     users = sorted(users, key=operator.attrgetter('username'), reverse=False)
+    posts_querydict = Post.objects.all().order_by('-id')
+    posts = []
+    for post in posts_querydict:
+        posts.append({
+            'id': post.id,
+            'date': post.created.strftime('%d/%m/%Y %H:%M:%S'),
+            'category': post.category,
+            'book_title': post.book.title,
+            'book_author': post.book.author,
+            'title': post.title,
+            'body': post.body,
+            'user': post.user.username,
+        })
     
     context = RequestContext(request, {
         'users': users,
+        'posts': posts,
     })
 
     return render(request, 'profiles/all.html', context)
@@ -79,13 +94,39 @@ def all(request):
 #   Ajax functions
 # -----------------
 
-def add_thought(request):
+def add_post(request):
     if request.method == "POST":
-        content = request.POST['thought_text']
+        content = request.POST['content']
+        book = request.POST['book_id']
+        category = request.POST['category']
+        if category == 'thought':
+            new_thought = Post(
+                user = request.user,
+                category = "thought",
+                book = Book.objects.get(id=book),
+                body = content
+            )
+            new_thought.save()
+            return HttpResponse(True)
+        elif category == 'underline':
+            new_underline = Post(
+                user = request.user,
+                category = category,
+                book = Book.objects.get(id=book),
+                body = content
+            )
+            new_underline.save()
+            return HttpResponse(True)
+    else:
+        return HttpResponse("Error")
+
+def add_underline(request):
+    if request.method == "POST":
+        content = request.POST['underline_text']
         book = request.POST['book_id']
         new_thought = Post(
             user = request.user,
-            category = "thought",
+            category = "underline",
             book = Book.objects.get(id=book),
             body = content
         )
@@ -94,16 +135,22 @@ def add_thought(request):
     else:
         return HttpResponse("Error")
 
-def add_underline(request):
-    if request.method == "POST":
-        pass
-    else:
-        return HttpResponse("Error")
-
 def get_user_feed(request):
     if request.method == "POST":
         username = request.POST['user']
         user = User.objects.get(username=username)
-        posts = Post.objects.find(user=user)
+        posts_querydict = Post.objects.filter(user=user).order_by('-id')
+        posts = []
+        for post in posts_querydict:
+            posts.append({
+                'id': post.id,
+                'date': post.created.strftime('%d/%m/%Y %H:%M:%S'),
+                'category': post.category,
+                'book_title': post.book.title,
+                'book_author': post.book.author,
+                'title': post.title,
+                'body': post.body,
+            })
+        return HttpResponse(json.dumps(posts))
     else:
         return HttpResponse("Error")

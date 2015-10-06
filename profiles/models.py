@@ -12,7 +12,9 @@ class Post(models.Model):
     category    = models.CharField(max_length=20)
     title       = models.CharField(max_length=200, blank=True, null=True)
     book	= models.ForeignKey(Book, blank=True, null=True)
+    reference   = models.CharField(max_length=200, blank=True, null=True)
     body        = models.TextField(blank=True, null=True)
+    created     = models.DateTimeField(auto_now=True)
 
 class PostComment(models.Model):
     user        = models.ForeignKey(User)

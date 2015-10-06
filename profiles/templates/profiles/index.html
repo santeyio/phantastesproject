@@ -73,12 +73,12 @@
 					<div class="collapse" id="thoughts">
 						<div id="book_select" class="col-md-12">
 							<br/>
-							<form action="/profile/add_thought/" method="post" id="thoughts_form">
+							<form action="/profile/add_post/" method="post" id="thoughts_form">
 								<input type="hidden" name="category" value="thought" />
 								<input type="hidden" id="book_id_thought" name="book_id" value="" />
 								<input name="book" id="book_title" class="form-control typeahead" data-id="" type="text" placeholder="Books">
 								<br/>&nbsp;<br/>
-								<textarea class="form-control" name="thought_text">Thoughts</textarea>
+								<textarea class="form-control" name="content">Thoughts</textarea>
 								<button type="submit" class="btn btn-default">Post</button>
 							</form>
 						</div>
@@ -86,12 +86,12 @@
 					<div class="collapse" id="underlines">
 						<div id="book_select" class="col-md-12">
 							<br/>
-							<form action="/profile/add_underline" method="post" id="underlines_form">
+							<form action="/profile/add_post/" method="post" id="underlines_form">
 								<input type="hidden" name="category" value="underline" />
 								<input type="hidden" id="book_id_underline" name="book_id" value="" />
 								<input name="book" id="book_title" class="form-control typeahead" data-id="" type="text" placeholder="Books">
 								<br/>&nbsp;<br/>
-								<textarea class="form-control" name="underline_text">Underline</textarea>
+								<textarea class="form-control" name="content">Underline</textarea>
 								<button type="submit" class="btn btn-default">Post</button>
 							</form>
 						</div>
@@ -100,9 +100,8 @@
 							stuff
 					</div>
 
-				<div class="col-md-8 profile-padding-top">
+				<div class="col-md-12 profile-padding-top feed">
 				<hr/>
-				Feed
 				</div>
 
 		</div>
@@ -114,6 +113,8 @@
 {% autoescape off %}
 dataset = {{ book_dataset }};
 {% endautoescape %}
+
+
 
 var book_list = $.map(dataset, function(value, index) { return index });
 
@@ -160,8 +161,6 @@ $('#underlines_form .typeahead').bind('typeahead:change', function(){
 $("#thoughts_form").submit(function(event){
 	event.preventDefault();
 	var $form = $(this),
-		book = dataset[$form.find("input[name='book']").val()],
-		thought = $form.find("input[name='thought_text']").val(),
 		url = $form.attr("action");
 
 		$.post(url, $(this).serialize())
@@ -170,8 +169,60 @@ $("#thoughts_form").submit(function(event){
 				console.log(data);
 			});
 	$("#thoughts").toggleClass('in');
+	refresh_feed();
 });
 
+$("#underlines_form").submit(function(event){
+	event.preventDefault();
+	var $form = $(this),
+		url = $form.attr("action");
+
+		$.post(url, $(this).serialize())
+			.done(function(data){
+				$("#ajax_output").append(data);
+				console.log(data);
+			});
+	$("#underlines").toggleClass('in');
+	refresh_feed();
+});
+
+// ------------
+// Ajax get feed data
+// ------------
+
+$(document).ready(function(){
+	refresh_feed();
+});
+
+function refresh_feed(){
+	$.ajax({
+		method: "POST",
+		url: "/profile/get_user_feed/", 
+		data: { user: "{{ username }}"},
+		dataType: 'json',
+		success: function(data){
+			console.log(data);
+			$('.feed').children().remove();
+			$('.feed').append("<hr/>");
+
+			for (post in data){
+				if (data[post].category == 'thought'){
+					$('.feed').append(
+						'<div class="well thought-background">\
+							<h5><i>Thought | '+data[post].book_title+'</i> <p class="pull-right text-muted">'+data[post].date+'</p></h5>\
+							<p>'+data[post].body+'.</p>\
+						</div>');
+				} else if (data[post].category == 'underline'){
+					$('.feed').append(
+						'<blockquote>\
+							'+data[post].body+'<br/>&nbsp;<br/>\
+							<footer>'+data[post].book_author+'  |  '+data[post].book_title+'<p class="pull-right">'+data[post].date+'</p></footer>\
+						</blockquote>');
+				}
+			}
+		}
+	});
+}
 
 </script>
 {% endblock %}
