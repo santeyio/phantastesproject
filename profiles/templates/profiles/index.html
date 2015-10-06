@@ -18,7 +18,7 @@
 		<div class="col-md-3 profile-padding-top">
 			<div class="panel panel-default"> 
 				<div class="panel-heading">
-					{{ request.user.username }}'s profile
+					{{ username }}'s profile
 				</div>
 				<div id="ajax_output">
 				</div>
@@ -27,7 +27,7 @@
 					<div class="text-center">
 						{% if profile.avatar %}
 						<img src="{{ MEDIA_URL }}{{ profile.avatar }}" height="150px" width="150px" />
-						{% else %}
+						{% elif logged_in %}
 						<div id="profile_picture_upload">	
 							<br/><br/>
 							<form enctype="multipart/form-data" id="file_upload" action="" method="post">
@@ -35,6 +35,9 @@
 								<input type="file" name="avatar" class="filestyle" data-classButton="btn btn-primary" data-input="false" data-classIcon="icon-plus" data-buttonText="Select File" />
 								<button class="btn btn-default" type="submit">Upload</button>
 							</form>
+						</div>
+						{% else %}
+						<div id="profile_picture_upload">	
 						</div>
 						{% endif %}
 					</div>
@@ -55,6 +58,7 @@
 
 		<div class="col-md-8 profile-padding-top">
 
+			{% if logged_in %}
 				<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#thoughts" aria-expanded="false" aria-controls="thoughts">Thoughts</button>
 				&nbsp;&nbsp;
 				<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#underlines" aria-expanded="false" aria-controls="underlines">Underlines</button>
@@ -99,6 +103,7 @@
 					<div class="collapse" id="stuff">
 							stuff
 					</div>
+				{% endif %}
 
 				<div class="col-md-12 profile-padding-top feed">
 				<hr/>
