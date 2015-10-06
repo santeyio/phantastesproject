@@ -12,7 +12,8 @@ import datetime, operator, json
 def index(request, username):
 
     # check if profile exists 
-    profile = Profile.objects.filter(user=request.user)
+    user = User.objects.get(username=username)
+    profile = Profile.objects.filter(user=user)
     if not profile:
         profile = False
     else:
@@ -28,31 +29,32 @@ def index(request, username):
             profile = Profile(user=request.user, avatar=request.FILES['avatar'])
             profile.save()
 
+
+    books = Book.objects.filter(active=True)
+    all_books = Book.objects.all()
+    book_dataset = {}
+
+
+    for book in all_books:
+        # create list for smart search on books for quotes section
+        book_dataset[book.title + " - " + book.author] = book.id
+
+    for book in books:
+        timedelta =  datetime.date.today() - book.start_date 
+        if timedelta.days < book.number_of_days:
+            current_book = book
+            days = Day.objects.filter(book=current_book)
+            days = sorted(days, key=operator.attrgetter('day'), reverse=False)
+
+
     # logged in view
     if request.user.username == username:
-
-        books = Book.objects.filter(active=True)
-        all_books = Book.objects.all()
-        book_dataset = {}
-
-
-        for book in all_books:
-            # create list for smart search on books for quotes section
-            book_dataset[book.title + " - " + book.author] = book.id
-
-        for book in books:
-            timedelta =  datetime.date.today() - book.start_date 
-            if timedelta.days < book.number_of_days:
-                current_book = book
-                days = Day.objects.filter(book=current_book)
-                days = sorted(days, key=operator.attrgetter('day'), reverse=False)
-
         context = RequestContext(request, {
             'book': current_book,
             'day': days[timedelta.days],
             'book_dataset': json.dumps(book_dataset),
-            'logged_in': True,
             'profile': profile,
+            'logged_in': True,
             'username': request.user.username,
         })
 
@@ -60,9 +62,13 @@ def index(request, username):
 
     # public view for users
     else:
-        user = User.objects.get(username=username)
         context = RequestContext(request, {
+            'book': current_book,
+            'day': days[timedelta.days],
+            'book_dataset': json.dumps(book_dataset),
+            'profile': profile,
             'logged_in': False,
+            'username': user.username,
         })
         return render(request, 'profiles/index.html', context)
 
