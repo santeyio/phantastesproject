@@ -9,7 +9,6 @@ def index(request):
     context = RequestContext(request,{})
     for book in books:
         timedelta = datetime.date.today() - book.start_date
-        timedelta = timedelta - datetime.timedelta(seconds=14400)
         if timedelta.days < book.number_of_days and timedelta.days >= 0:
             current_book = book
             days = Day.objects.filter(book=current_book)

@@ -15,9 +15,33 @@
 	<h3>All users</h3>
 	<hr/>
 	<div class="container">
-		{% for user in users %}
-			<a href="/profile/{{ user.username }}/">{{ user.username }}</a><br/>
-		{% endfor %}
+		<div class="row">
+			<div class="col-md-3">
+			{% for user in users %}
+				<a href="/profile/{{ user.username }}/">{{ user.username }}</a><br/>
+			{% endfor %}
+			</div>
+			
+			<div class="col-md-9 feed">
+				{% for post in posts %}
+					{% if post.category == "thought" %}
+						<div class="well thought-background">
+							<h5><i>{{ post.category|title }}  | {{ post.book_title }}</i></h5>
+							<p class="pull-right text-muted float-top">{{ post.date }}<br/>
+							<a href="/profile/{{ post.user }}/">{{ post.user }}</a></p>
+							<p>{{ post.body }}</p>
+						</div>
+					{% elif post.category == "underline" %}
+						<blockquote>
+							{{ post.body }}<br/>&nbsp;<br/>
+							<footer>{{ post.book_author }}&nbsp;&nbsp;|&nbsp;&nbsp;{{ post.book_title }}
+							<p class="pull-right">{{ post.date }}<br/>
+							<a href="/profile/{{ post.user }}/">{{ post.user }}</a></p></footer>
+						</blockquote>
+					{% endif %}
+				{% endfor %}
+			</div>
+		</div>
 	</div>
 </div>
 {% endblock %}

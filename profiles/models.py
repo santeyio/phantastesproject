@@ -3,16 +3,18 @@ from django.contrib.auth.models import User
 from readings.models import Book
 
 class Profile(models.Model):
-	user = models.OneToOneField(User)
-	avatar = models.ImageField(blank=True, null=True)
-	status = models.CharField(blank=True, null=True, max_length=500)
+    user = models.OneToOneField(User)
+    avatar = models.ImageField(blank=True, null=True)
+    status = models.CharField(blank=True, null=True, max_length=500)
 
 class Post(models.Model):
     user        = models.ForeignKey(User)
     category    = models.CharField(max_length=20)
     title       = models.CharField(max_length=200, blank=True, null=True)
     book	= models.ForeignKey(Book, blank=True, null=True)
+    reference   = models.CharField(max_length=200, blank=True, null=True)
     body        = models.TextField(blank=True, null=True)
+    created     = models.DateTimeField(auto_now=True)
 
 class PostComment(models.Model):
     user        = models.ForeignKey(User)
