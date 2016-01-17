@@ -17,9 +17,10 @@ class Post(models.Model):
     created     = models.DateTimeField(auto_now=True)
 
 class PostComment(models.Model):
-    user        = models.ForeignKey(User)
-    post        = models.ForeignKey(Post)
-    comment     = models.TextField()
+	user        = models.ForeignKey(User)
+	post        = models.ForeignKey(Post)
+	comment     = models.TextField()
+	created		= models.DateTimeField(auto_now=True)
 
 class PostLike(models.Model):
     user        = models.ForeignKey(User)

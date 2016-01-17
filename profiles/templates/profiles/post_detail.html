@@ -1,0 +1,107 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}Phantastes{% endblock %}
+
+{% block extra_head %}
+<script src="/site_media/static/js/typeahead.bundle.js"></script>
+{% endblock %}
+
+{% block body_class %}home{% endblock %}
+
+{% block body_base %}
+{% if post.category == "thought" %}
+	<div class="container">
+		<h3>{{ post.book.title }}</h3>
+		<hr/>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8">
+					<p class="pull-right text-muted float-top">{{ post.date }}<br/>
+					<p>{{ post.body }}</p>
+				</div>
+{% elif post.category == "underline" %}
+	<div class="container">
+		<h3>Underline</h3>
+		<hr/>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8">
+					<blockquote>
+						{{ post.body }}<br/>&nbsp;<br/>
+						<footer>{{ post.book.author }}&nbsp;&nbsp;|&nbsp;&nbsp;{{ post.book.title }}
+						<p class="pull-right">{{ post.date }}</footer>
+					</blockquote>
+				</div>
+{% endif %}
+		</div>
+		<br/>
+		<div class="well comment_well">
+			<form action="/profile/add_comment/" id="comment_form">
+				<input type="hidden" name="post_id" value="{{ post.id }}" />
+				<textarea class="post_comment_textarea" name="comment"></textarea>
+				<br/><br/>
+				<button class="btn">comment</button>
+			</form>
+			
+			<hr/>
+
+			<div class="comment_container">
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+
+// ------------
+// Ajax post for form
+// ------------
+
+$("#comment_form").submit(function(event){
+	event.preventDefault();
+	var $form = $(this),
+		url = $form.attr("action");
+
+	$.post(url, $(this).serialize())
+	refresh_comments();
+});
+
+// ------------
+// Ajax get feed data
+//  and write html into view
+// ------------
+
+$(document).ready(function(){
+	refresh_comments();
+});
+
+$("#refresh_comments").click(function(){
+	refresh_comments();
+});
+
+function refresh_comments(){
+	$.ajax({
+		method: "POST",
+		url: "/profile/get_comments/", 
+		data: { post_id: "{{ post.id }}"},
+		dataType: 'json',
+		success: function(data){
+			console.log(data);
+			$('.comment_container').children().remove();
+			$('.comment_container').append("<hr/>");
+
+			for (post in data){
+				$('.comment_container').append('<div class="post_comment">\
+						<h5><i>'+data[post].date+'</i> | '+data[post].user+'</h5>\
+						<p>'+data[post].comment+'</p>\
+					</div>\
+					<br/>');
+			}
+		}
+	});
+}
+
+</script>
+{% endblock %}

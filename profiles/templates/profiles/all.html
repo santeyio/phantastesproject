@@ -26,7 +26,7 @@
 				{% for post in posts %}
 					{% if post.category == "thought" %}
 						<div class="well thought-background">
-							<h5><i>{{ post.category|title }}  | {{ post.book_title }}</i></h5>
+							<a href="/profile/post/{{ post.id }}"><h5><i>{{ post.category|title }}  | {{ post.book_title }}</i></a></h5>
 							<p class="pull-right text-muted float-top">{{ post.date }}<br/>
 							<a href="/profile/{{ post.user }}/">{{ post.user }}</a></p>
 							<p>{{ post.body }}</p>

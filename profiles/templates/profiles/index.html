@@ -63,7 +63,7 @@
 				&nbsp;&nbsp;
 				<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#underlines" aria-expanded="false" aria-controls="underlines">Underlines</button>
 				&nbsp;&nbsp;
-				<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#stuff" aria-expanded="false" aria-controls="stuff">Stuff</button>
+				<button class="btn btn-primary" type="button" id="refresh_feed">Refresh</button>
 				<br/>&nbsp;<br/>
 					<!--
 					<ul class="nav nav-tabs">
@@ -168,11 +168,7 @@ $("#thoughts_form").submit(function(event){
 	var $form = $(this),
 		url = $form.attr("action");
 
-		$.post(url, $(this).serialize())
-			.done(function(data){
-				$("#ajax_output").append(data);
-				console.log(data);
-			});
+	$.post(url, $(this).serialize())
 	$("#thoughts").toggleClass('in');
 	refresh_feed();
 });
@@ -182,20 +178,21 @@ $("#underlines_form").submit(function(event){
 	var $form = $(this),
 		url = $form.attr("action");
 
-		$.post(url, $(this).serialize())
-			.done(function(data){
-				$("#ajax_output").append(data);
-				console.log(data);
-			});
+	$.post(url, $(this).serialize())
 	$("#underlines").toggleClass('in');
 	refresh_feed();
 });
 
 // ------------
 // Ajax get feed data
+//  and write html into view
 // ------------
 
 $(document).ready(function(){
+	refresh_feed();
+});
+
+$("#refresh_feed").click(function(){
 	refresh_feed();
 });
 
@@ -214,7 +211,7 @@ function refresh_feed(){
 				if (data[post].category == 'thought'){
 					$('.feed').append(
 						'<div class="well thought-background">\
-							<h5><i>Thought | '+data[post].book_title+'</i> <p class="pull-right text-muted">'+data[post].date+'</p></h5>\
+							<h5><a href="/profile/post/'+data[post].id+'"><i>Thought | '+data[post].book_title+'</i></a> <p class="pull-right text-muted">'+data[post].date+'</p></h5>\
 							<p>'+data[post].body+'.</p>\
 						</div>');
 				} else if (data[post].category == 'underline'){

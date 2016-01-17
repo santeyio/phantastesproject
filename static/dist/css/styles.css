@@ -109,6 +109,22 @@
 	margin-top:-45px;
 }
 
-.thought-background{
+.thought-background {
 	background-color: white;
 }
+
+/*
+ * Posts
+ *
+ **/
+
+.post_comment {
+	background-color: white;
+	padding:10px;
+	border-width:1px;
+}
+
+.post_comment_textarea {
+	width:350px;
+}
+
