@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.template import RequestContext, loader
-from models import Profile, Post
+from models import Profile, Post, PostComment
 from forms import ProfileForm
 from readings.models import Book, Day
 from django.contrib.auth.decorators import login_required
@@ -72,6 +72,7 @@ def index(request, username):
         })
         return render(request, 'profiles/index.html', context)
 
+@login_required(login_url='/account/login')
 def all(request):
     users = User.objects.all()
     users = sorted(users, key=operator.attrgetter('username'), reverse=False)
@@ -95,6 +96,15 @@ def all(request):
     })
 
     return render(request, 'profiles/all.html', context)
+
+def post_detail(request, post_id):
+    post = Post.objects.get(id=post_id)
+    
+    context = RequestContext(request, {
+        'post': post,
+    })
+
+    return render(request, 'profiles/post_detail.html', context)
 
 # ------------------
 #   Ajax functions
@@ -158,5 +168,37 @@ def get_user_feed(request):
                 'body': post.body,
             })
         return HttpResponse(json.dumps(posts))
+    else:
+        return HttpResponse("Error")
+
+def get_comments(request):
+    if request.method == "POST":
+        post_id = request.POST['post_id']
+        post = Post.objects.get(id=post_id)
+        comments_querydict = PostComment.objects.filter(post=post).order_by('-created')
+        comments = []
+        for comment in comments_querydict:
+            comments.append({
+                'id': comment.id,
+                'date': comment.created.strftime('%d/%m/%Y %H:%M:%S'),
+                'user': comment.user.username,
+				'comment': comment.comment
+            })
+        return HttpResponse(json.dumps(comments))
+    else:
+        return HttpResponse("Error")
+
+def add_comment(request):
+    if request.method == "POST":
+        comment = request.POST['comment']
+        post = request.POST['post_id']
+        new_comment = PostComment(
+            user = request.user,
+            post = Post.objects.get(id=post),
+            comment = comment,
+        )
+        #return HttpResponse(json.dumps(post))
+        new_comment.save()
+        return HttpResponse(True)
     else:
         return HttpResponse("Error")
