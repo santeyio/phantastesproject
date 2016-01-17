@@ -38,12 +38,14 @@
 		</div>
 		<br/>
 		<div class="well comment_well">
+    		{% if request.user.is_authenticated %}
 			<form action="/profile/add_comment/" id="comment_form">
 				<input type="hidden" name="post_id" value="{{ post.id }}" />
 				<textarea class="post_comment_textarea" name="comment"></textarea>
 				<br/><br/>
 				<button class="btn">comment</button>
 			</form>
+			{% endif %}
 			
 			<hr/>
 
@@ -90,7 +92,6 @@ function refresh_comments(){
 		success: function(data){
 			console.log(data);
 			$('.comment_container').children().remove();
-			$('.comment_container').append("<hr/>");
 
 			for (post in data){
 				$('.comment_container').append('<div class="post_comment">\
