@@ -19,6 +19,7 @@ from ...core.utils.paginator.infinite_paginator import paginate
 from ...topic.models import Topic
 from .models import TopicNotification
 from .forms import NotificationForm, NotificationCreationForm
+from ...user.utils.email import send_notification_email
 
 
 @require_POST
