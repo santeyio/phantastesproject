@@ -11,6 +11,9 @@ import datetime, operator, json
 @login_required(login_url='/account/login')
 def index(request, username):
 
+    # set context dict
+    context_dict = {}
+
     # check if profile exists 
     user = User.objects.get(username=username)
     profile = Profile.objects.filter(user=user)
@@ -34,43 +37,33 @@ def index(request, username):
     all_books = Book.objects.all()
     book_dataset = {}
 
-
     for book in all_books:
         # create list for smart search on books for quotes section
         book_dataset[book.title + " - " + book.author] = book.id
 
+    context_dict['book_dataset'] = json.dumps(book_dataset)
+
     for book in books:
         timedelta =  datetime.date.today() - book.start_date 
         if timedelta.days < book.number_of_days:
-            current_book = book
+            context_dict['current_book'] = book
             days = Day.objects.filter(book=current_book)
-            days = sorted(days, key=operator.attrgetter('day'), reverse=False)
+            context_dict['day'] = sorted(days, key=operator.attrgetter('day'), reverse=False)
 
+    context_dict['profile'] = profile
 
     # logged in view
     if request.user.username == username:
-        context = RequestContext(request, {
-            'book': current_book,
-            'day': days[timedelta.days],
-            'book_dataset': json.dumps(book_dataset),
-            'profile': profile,
-            'logged_in': True,
-            'username': request.user.username,
-        })
-
-        return render(request, 'profiles/index.html', context)
+        context_dict['logged_in'] = True
+        context_dict['username'] = request.user.username
 
     # public view for users
     else:
-        context = RequestContext(request, {
-            'book': current_book,
-            'day': days[timedelta.days],
-            'book_dataset': json.dumps(book_dataset),
-            'profile': profile,
-            'logged_in': False,
-            'username': user.username,
-        })
-        return render(request, 'profiles/index.html', context)
+        context_dict['logged_in'] = False
+        context_dict['username'] = user.username
+
+    context = RequestContext(request, context_dict)
+    return render(request, 'profiles/index.html', context)
 
 @login_required(login_url='/account/login')
 def all(request):
