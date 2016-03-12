@@ -146,6 +146,7 @@ INSTALLED_APPS = [
     "account",
     "metron",
     "pinax.eventlog",
+    "djangoChat",
 
     # project
     "phantastes",

@@ -1,0 +1,51 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+
+{% block extra_head %} 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/site_media/static/djangoChat/css/normalize.css" />
+    <link href="/site_media/static/djangoChat/css/main.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript"> 
+      
+      jsonData = {{data}};
+    </script>
+   <script data-main="/site_media/static/djangoChat/dist/scripts/main" type="text/javascript" src="/site_media/static/djangoChat/dist/scripts/vendor/requirejs/require.js"></script>
+    
+{% endblock %}
+
+{% block head_title %}Phantastes{% endblock %}
+{% block body_class %}home{% endblock %}
+
+{% block body_base %}
+	
+<div class="container">
+	<!--  chat box area -->
+	<div class="col-md-9">
+	<section class="chatBox">
+		
+	</section>
+	</div>
+
+<!--  sidebar area -->
+<section class="sidebar">
+	<h4><a href="/chat/logout">logout</a></h4>
+	<div class="side">
+		<h2>Online Users</h2>
+		<div class="onlineUsers">
+		</div>
+	</div>
+</section>
+</div>
+
+<!--  input area  -->
+<section class="input-area">
+	<!--<img width="64" height="64" src="{{user.profile.gravatar_url}}" alt="avatar" title="signup at gravatar.com with your email which is resgistered here to change your avatar">	-->
+	<textarea class="input-box"></textarea>
+	<button class="submit btn btn-default">send</button>
+	<p class="clear-both"></p>
+</section>
+{% endblock %}
+
+<!-- don't need footer -->
+{% block footer %}{% endblock %}
