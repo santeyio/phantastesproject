@@ -17,15 +17,15 @@ def notify_all_users(poll, notification_type):
     for user in users:
         email_list.append(user.email)
 
-    subject = "Phantastes: " + notification_type
-    email_from = "Anodos <root@phantastes.calebhayashida.com>"
-    email_body = "this is the email body. It rocks, right?"
-    print subject
-    print email_list
+    subject = "Phantastes: " + poll.title
+    email_from = "Phantastes <no-reply@phantastesproject.com>"
+    email_body = "this is the email body. It rocks, right?<br/> <br/><b>This is some more text in the email</b>"
+    # print subject
+    # print email_list
     
-    # msg = EmailMessage(subject, email_body, email_from, email_list)
-    # msg.content_subtype = "html"
-    # msg.send()
+    msg = EmailMessage(subject, email_body, email_from, ['no-reply@phantastesproject.com'], email_list)
+    msg.content_subtype = "html"
+    msg.send()
                            
 
 class Command(BaseCommand):

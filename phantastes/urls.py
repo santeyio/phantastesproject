@@ -17,7 +17,7 @@ urlpatterns = patterns(
     url(r"^polls/", include("polls.urls", namespace="polls")),
     url(r"^readings/", include("readings.urls", namespace="readings")),
     url(r"^about/$", views.about, name="about"),
-    url(r'^chat/', include('djangoChat.urls')),
+    url(r'^chat/', include('djangoChat.urls', namespace="djangoChat")),
 )
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

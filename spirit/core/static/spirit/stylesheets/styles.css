@@ -28,6 +28,7 @@ body {
 /**
  * Correct `block` display not defined in IE 8/9.
  */
+.spirit-styles,
 article,
 aside,
 details,
@@ -454,7 +455,7 @@ body {
   margin-bottom: 100px; }
 
 .footer {
-  position: absolute;
+  /*position: absolute;*/
   left: 0;
   bottom: 0;
   height: 100px;
@@ -527,6 +528,7 @@ h2 {
   font-size: 21.33333px;
   line-height: 32.0px; }
 
+.spirit-styles,
 .comment-media, .container,
 .header, .row,
 .comment, .comment-info, .menu-item {
@@ -547,7 +549,7 @@ h2 {
 .tabs li,
 .admin-tabs li,
 .header-tabs li,
-.nav li,
+.spirit-styles .nav li,
 .comment-date li,
 .comment-actions li,
 .paginator li,
@@ -562,7 +564,7 @@ h2 {
 .tabs li,
 .admin-tabs li,
 .header-tabs li,
-.nav li,
+.spirit-styles .nav li,
 .comment-date li,
 .comment-actions li,
 .paginator li,
@@ -574,7 +576,7 @@ h2 {
   .tabs li:first-child,
   .admin-tabs li:first-child,
   .header-tabs li:first-child,
-  .nav li:first-child,
+  .spirit-styles .nav li:first-child,
   .comment-date li:first-child,
   .comment-actions li:first-child,
   .paginator li:first-child,
@@ -758,6 +760,7 @@ input[type="submit"].button,
 .rows {
   margin-bottom: 24px; }
 
+.spirit-styles,
 .row,
 .comment {
   padding: 12px;
@@ -907,9 +910,9 @@ input.move-comment-checkbox {
   display: inline-block;
   margin: 0; }
 
-.nav {
+.spirit-styles .nav {
   font-size: 14px; }
-  .nav .fa {
+  .spirit-styles .nav .fa {
     margin-left: 12px; }
 
 .comments {
