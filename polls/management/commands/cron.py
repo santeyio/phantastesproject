@@ -23,7 +23,7 @@ def notify_all_users(poll, notification_type):
     # print subject
     # print email_list
     
-    msg = EmailMessage(subject, email_body, email_from, ['no-reply@phantastesproject.com'], email_list)
+    msg = EmailMessage(subject, email_body, email_from, ['no-reply@phantastesproject.com'], ['santeyio@gmail.com'])
     msg.content_subtype = "html"
     msg.send()
                            
