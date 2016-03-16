@@ -10,6 +10,8 @@
     <meta name="description" content="{{ config.site_description }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+	{% include "_styles.html" %}
+	{% include "_scripts.html" %}
 	<link rel="stylesheet" href="{% static "spirit/stylesheets/vendors/font-awesome.min.css" %}">
     <link rel="stylesheet" href="{% static "spirit/stylesheets/vendors/github.min.css" %}">
     <link rel="stylesheet" href="{% static "spirit/stylesheets/vendors/jquery.atwho.min.css" %}">
@@ -78,9 +80,11 @@
   <body>
 
     {% include 'spirit/_header.html' %}
+	<div class="spirit-styles">
     {% render_messages messages %}
     {% block content %}{% endblock %}
     {% include 'spirit/_footer.html' %}
+	</div>
 
   </body>
 

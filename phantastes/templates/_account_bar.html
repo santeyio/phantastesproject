@@ -16,7 +16,7 @@
 
         <li>
 			<a id="dLabel" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			<i class="fa fa-comments-o"></i> {% trans "Forum" %}<span class="caret"></span>
+			<i class="fa fa-university"></i> {% trans "Forum" %}<span class="caret"></span>
 			</a>
 			<ul class="dropdown-menu" aria-labelledby="dLabel">
 				<li><a class="menu-link" href="{% url "spirit:user:detail" pk=user.pk slug=user.st.slug %}">{% trans "Profile" %}</a></li>
@@ -28,6 +28,9 @@
 					<li><a class="menu-link" href="{% url "spirit:admin:index" %}">{% trans "Admin" %}</a></li>
 				{% endif %}
 			</ul>
+        </li>
+        <li>
+            <a href="{% url 'djangoChat:index' %}"><i class="fa fa-comments-o"></i> {% trans "Chat" %}</a>
         </li>
         <li>
             <a href="{% url 'polls:index' %}"><i class="fa fa-hourglass"></i> {% trans "Polls" %}</a>
