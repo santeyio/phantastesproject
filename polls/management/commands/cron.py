@@ -35,6 +35,10 @@ def notify_all_users(poll, email_template):
         msg = EmailMessage(subject, email_html, email_from, [user.email])
         msg.content_subtype = "html"
         msg.send()
+        fh = open('/tmp/mail_log/'+user.username, 'w')
+        fh.write(email_html)
+        fh.close()
+
 
 
                            
