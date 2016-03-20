@@ -1,0 +1,29 @@
+{% extends "email_base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+	<h2>Voting Open</h2>
+	<hr/><br/>
+
+	<p>
+	Hey {{ name }}, 
+	</p>
+	<p>
+	Voting is now open for {{ poll_title }}! If you have a chance take a minute to vote for what we read next month!
+	</p>
+
+	<table>
+		<tr>
+			<td align="center">
+				<p>
+					<a target="_blank" href="http://{{ site_base }}{% url 'polls:voting' poll_id %}" class="button" style="-webkit-appearance:button;-moz-appearance:button;appearance:button;text-decoration:none;background-color:#ff6600;color:white;border-radius:9px;padding:15px;"><b>Vote</b></a>
+				</p>
+			</td>
+		</tr>
+	</table>
+
+
+	<p><i>~Anodos</i></p>
+
+{% endblock %}

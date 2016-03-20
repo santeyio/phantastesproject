@@ -1,0 +1,31 @@
+{% extends "email_base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+	{% block email_title %}Nominations Open{% endblock %}
+
+	{% block greeting %}
+	Hey {{ name }}, 
+	{% endblock %}
+
+	{% block p1 %}
+	Nominations are now open for {{ poll_title }}. If you have a chance take a minute to nominate a book for the upcoming months reading. Happy reading!
+	{% endblock %}
+
+{% block opt_link %}
+	<table>
+		<tr>
+			<td align="center">
+				<p>
+					<a target="_blank" href="http://{{ site_base }}{% url 'polls:nominations' poll_id %}" class="button" style="-webkit-appearance:button;-moz-appearance:button;appearance:button;text-decoration:none;background-color:#ff6600;color:white;border-radius:9px;padding:15px;"><b>Nominate a Book</b></a>
+				</p>
+			</td>
+		</tr>
+	</table>
+
+
+{% endblock %}
+	<p><i>~Anodos</i></p>
+
+{% endblock %}

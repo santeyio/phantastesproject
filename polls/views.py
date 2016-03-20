@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.sites.models import Site
 from django.http import HttpResponse
 from django.template import RequestContext, loader
 from django.contrib.auth.decorators import login_required
@@ -107,3 +108,20 @@ def nominations(request, poll_id):
         'disabled': disabled,
     })
     return render(request, 'polls/nominations.html', context)
+
+def test_email_render(request):
+    
+    template = loader.get_template('polls/email_update.html')
+    context = RequestContext(request, {
+        'name': 'Caleb',
+        'poll_title': 'April Voting',
+        'poll_id': 4,
+        'site_base': Site.objects.get_current().domain
+    })
+    rendered = template.render(context)
+    # write it to /tmp just in case you want to download
+    fh = open('/tmp/template_example.html', 'w')
+    fh.write(rendered)
+    fh.close()
+
+    return HttpResponse(rendered)
