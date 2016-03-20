@@ -39,8 +39,6 @@ def notify_all_users(poll, email_template):
         fh.write(email_html)
         fh.close()
 
-
-
                            
 
 class Command(BaseCommand):
@@ -49,16 +47,16 @@ class Command(BaseCommand):
 
         polls = Poll.objects.filter()
 
-        poll = Poll.objects.get(id=4)
-        notify_all_users(poll, "polls/email_update.html")
+        # poll = Poll.objects.get(id=4)
+        # notify_all_users(poll, "polls/email_update.html")
 
-        # for poll in polls:
-            # if poll.nominations_open.date() == date.today():
-                # notify_all_users(poll, "polls/email_nominations.html")
-            # if poll.voting_open.date() == date.today():
-                # notify_all_users(poll, "polls/email_voting_open.html")
-            # if poll.voting_close.date() - date.today() == timedelta(1):
-                # notify_all_users(poll, "polls/email_voting_close.html")
+        for poll in polls:
+            if poll.nominations_open.date() == date.today():
+                notify_all_users(poll, "polls/email_nominations.html")
+            if poll.voting_open.date() == date.today():
+                notify_all_users(poll, "polls/email_voting_open.html")
+            if poll.voting_close.date() - date.today() == timedelta(1):
+                notify_all_users(poll, "polls/email_voting_close.html")
 
         self.stdout.write('Successfully sent out update emails')
 
