@@ -1,0 +1,42 @@
+{% extends "email_base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+	{% block email_title %}Nominations Open{% endblock %}
+
+	{% block greeting %}
+	Hey {{ name }}, 
+	{% endblock %}
+
+	{% block p1 %}
+	You're receiving this email because you signed up for an account on Phantastes. I have a couple quick updates I wanted to run by you -- first off all, automated email reminders for when nominations open will be sent out with a link to the nominations page. Notifications will also be sent out when voting opens, and a day before voting closes. 
+<br/><br/>
+Also, we now have an official domain: phantastesproject.com. You can still acces the site via the old sub domain (phantastes.calebhayashida.com) if you want to, though I'm not sure why you would. 
+<br/><br/>
+If you don't want to receive emails from phantastes, I haven't yet got an unsubscription function up. I will in the next few weeks, you can see an unsubscribe button at the button of this email, but it doesn't go anywhere yet x).
+In the meantime, if you don't want to get email notifications, please delete your phantastes account and you will no longer receive emails or shoot me an email at caleb@phantastesproject.com. By the way, if you want your own phantastesproject.com email that will just forward to your gmail (or whatever) let me know and I can set you up with one.
+<br/><br/>
+There are a number of updates on the site itslef; I finally got the main header / navigation moved over to the forum part of things so that navigation is a bit better now. I also added a chatroom. Also note that you have publically accessible links to your thoughts and quotes where outside people can read and comment.
+<br/><br/>
+Remember, I want feedback! If you think anything can be improved or if there are features that you would like to see, please email me or post on the forum! I know that we've been slow in getting started, but I see a ton of potential in this community, and even if it takes a few years to get things rolling I think it's a worthwhile endeavor as we try to figure out how to make this work. Thanks for getting on board with this project in the first place. 
+<br/><br/>
+Last but not least, nominations for next month are open. Place a nomination with the link below if you have a chance. 
+	{% endblock %}
+
+{% block opt_link %}
+	<table>
+		<tr>
+			<td align="center">
+				<p>
+					<a target="_blank" href="http://{{ site_base }}{% url 'polls:nominations' poll_id %}" class="button" style="-webkit-appearance:button;-moz-appearance:button;appearance:button;text-decoration:none;background-color:#ff6600;color:white;border-radius:9px;padding:15px;"><b>Nominate a Book</b></a>
+				</p>
+			</td>
+		</tr>
+	</table>
+
+
+{% endblock %}
+	<p><i>~Caleb</i></p>
+
+{% endblock %}
