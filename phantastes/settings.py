@@ -10,14 +10,14 @@ TEMPLATE_DEBUG = DEBUG
 
 DATABASES = {
     "default": {
-        # "ENGINE": "django.db.backends.sqlite3",
-        # "NAME": "dev.db",
-	 "ENGINE": "django.db.backends.postgresql_psycopg2",
-	 "NAME": "thepalace",
-	 "USER": "cosmo",
-	 "PASSWORD": "th3M1rR0r",
-	 "HOST": "localhost",
-	 "PORT": "",
+         "ENGINE": "django.db.backends.sqlite3",
+         "NAME": "dev.db",
+	 # "ENGINE": "django.db.backends.postgresql_psycopg2",
+	 # "NAME": "thepalace",
+	 # "USER": "cosmo",
+	 # "PASSWORD": "th3M1rR0r",
+	 # "HOST": "localhost",
+	 # "PORT": "",
     }
 }
 
@@ -233,7 +233,7 @@ AWS_SES_REGION_ENDPOINT = "email.us-east-1.amazonaws.com"
 # EMAIL_PORT = 465
 # EMAIL_HOST_USER = 'AKIAJPPNDHZPNE4YGOQA'
 # EMAIL_HOST_PASSWORD = 'Ar342kKneUhS1VbC3KVFvTwyfFTMVYjDKiiKRMBZlKe1'
-# DEFAULT_FROM_EMAIL = "no-reply@phantastesproject.com"
+DEFAULT_FROM_EMAIL = "no-reply@phantastesproject.com"
 
 ACCOUNT_OPEN_SIGNUP = True
 ACCOUNT_EMAIL_UNIQUE = True
