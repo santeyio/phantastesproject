@@ -46,9 +46,10 @@ def index(request, username):
     for book in books:
         timedelta =  datetime.date.today() - book.start_date 
         if timedelta.days < book.number_of_days:
-            context_dict['current_book'] = book
-            days = Day.objects.filter(book=current_book)
-            context_dict['day'] = sorted(days, key=operator.attrgetter('day'), reverse=False)
+            days = Day.objects.filter(book=book)
+            days = sorted(days, key=operator.attrgetter('day'), reverse=False)
+            context_dict['day'] = days[timedelta.days]
+            context_dict['book'] = book
 
     context_dict['profile'] = profile
 
