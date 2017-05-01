@@ -32,6 +32,7 @@
 				<p>{% blocktrans %}You can <a href="{{ login_url }}" class="btn btn-default">Log In</a> or <a href="{{ signup_url }}" class="btn btn-primary">Sign Up</a> to try out the site.{% endblocktrans %}</p>
 				{% endif %}
 			</div>
+      {% if book %}
 			<div class="col-md-4">
 				<div class="panel panel-default"> <div class="panel-heading">
 						<h3 class="panel-title">Today's Reading</h3>
@@ -47,6 +48,7 @@
 					</div>
 				</div>
 			</div>
+      {% endif %}
         </div>
     </section>
     <section style="background-color:rgba(242, 242, 242, 0.48)">
