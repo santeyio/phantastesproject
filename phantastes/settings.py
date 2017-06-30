@@ -223,16 +223,16 @@ FIXTURE_DIRS = [
 ]
 
 EMAIL_BACKEND = "django_ses.SESBackend"
-AWS_SES_ACCESS_KEY_ID = "AKIAJ7ZHC5KVUP7LGDOQ"
-AWS_SES_SECRET_ACCESS_KEY = "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"
+AWS_SES_ACCESS_KEY_ID = "ses access key id"
+AWS_SES_SECRET_ACCESS_KEY = "ses secret key"
 AWS_SES_REGION_NAME = "us-east-1"
 AWS_SES_REGION_ENDPOINT = "email.us-east-1.amazonaws.com"
 #AWS_SES_REGION_ENDPOINT = "email-smtp.us-east-1.amazonaws.com"
 # EMAIL_BACKEND = "django_smtp_ssl.SSLEmailBackend"
 # EMAIL_HOST = "email-smtp.us-east-1.amazonaws.com"
 # EMAIL_PORT = 465
-# EMAIL_HOST_USER = 'AKIAJPPNDHZPNE4YGOQA'
-# EMAIL_HOST_PASSWORD = 'Ar342kKneUhS1VbC3KVFvTwyfFTMVYjDKiiKRMBZlKe1'
+# EMAIL_HOST_USER = 'host user'
+# EMAIL_HOST_PASSWORD = 'host password'
 DEFAULT_FROM_EMAIL = "no-reply@phantastesproject.com"
 
 ACCOUNT_OPEN_SIGNUP = True
